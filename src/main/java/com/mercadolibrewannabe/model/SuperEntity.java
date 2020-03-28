@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class SuperEntity {
+public class SuperEntity {
 
 	@Id
 	@GeneratedValue
