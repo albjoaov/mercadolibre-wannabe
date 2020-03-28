@@ -17,7 +17,7 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.mercadolibrewannabe"))
-				// .paths(PathSelectors.ant("/api/**")) TODO: Don't working with base URL
+				.paths(PathSelectors.ant("/**")) // TODO: Don't working with base URL
 				.build();
 
 		/* TODO: at production profile add -> .ignoredParameterTypes with User.class to avoid showing
