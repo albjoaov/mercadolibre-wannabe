@@ -1,4 +1,4 @@
-package com.mercadolibrewannabe.form;
+package com.mercadolibrewannabe.model.form;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mercadolibrewannabe.model.User;
