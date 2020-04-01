@@ -2,6 +2,7 @@ package com.mercadolibrewannabe.model;
 
 import com.mercadolibrewannabe.utils.BCrypter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ public class User extends SuperEntity {
 
 	@NotBlank
 	@Email
+	@Column (unique = true)
 	private String email;
 
 	@NotBlank
