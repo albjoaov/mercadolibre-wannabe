@@ -1,5 +1,6 @@
-package com.mercadolibrewannabe.model.validation;
+package com.mercadolibrewannabe.config;
 
+import com.mercadolibrewannabe.model.dto.ApiErrorReturn;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;

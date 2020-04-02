@@ -1,4 +1,4 @@
-package com.mercadolibrewannabe.model.validation;
+package com.mercadolibrewannabe.model.dto;
 
 public class ApiErrorReturn {
 
