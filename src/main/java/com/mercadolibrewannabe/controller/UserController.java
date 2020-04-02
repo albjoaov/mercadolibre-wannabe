@@ -2,7 +2,10 @@ package com.mercadolibrewannabe.controller;
 
 import com.mercadolibrewannabe.model.User;
 import com.mercadolibrewannabe.model.form.UserForm;
+import com.mercadolibrewannabe.model.validation.UniqueEmailValidator;
 import com.mercadolibrewannabe.repository.UserRepository;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,11 @@ public class UserController {
 
 	public UserController (UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.addValidators(new UniqueEmailValidator(userRepository));
 	}
 
 	@PostMapping
