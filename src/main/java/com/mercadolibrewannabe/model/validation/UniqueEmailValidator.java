@@ -29,8 +29,6 @@ public class UniqueEmailValidator implements Validator {
 
 		Optional<User> userOptional = this.userRepository.findByEmail(email);
 
-		userOptional.ifPresent(e -> {
-			errors.rejectValue("email", "This email already has been used");
-		});
+		userOptional.ifPresent(e -> errors.rejectValue("email", "", "This email already has been used"));
 	}
 }
