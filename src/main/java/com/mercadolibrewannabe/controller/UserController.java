@@ -1,8 +1,11 @@
 package com.mercadolibrewannabe.controller;
 
-import com.mercadolibrewannabe.form.UserForm;
 import com.mercadolibrewannabe.model.User;
+import com.mercadolibrewannabe.model.form.UserForm;
+import com.mercadolibrewannabe.model.validation.UniqueEmailValidator;
 import com.mercadolibrewannabe.repository.UserRepository;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/user")
@@ -23,8 +26,13 @@ public class UserController {
 		this.userRepository = userRepository;
 	}
 
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.addValidators(new UniqueEmailValidator(userRepository));
+	}
+
 	@PostMapping
-	@ResponseStatus(OK)
+	@ResponseStatus(CREATED)
 	public void create(@Valid @RequestBody UserForm userForm) {
 		User user = userForm.toDomain();
 		userRepository.save(user);
