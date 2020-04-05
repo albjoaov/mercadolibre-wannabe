@@ -1,17 +1,19 @@
 package com.mercadolibrewannabe.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Category extends SuperEntity {
 
 	@NotBlank
+	@Column(unique = true)
 	private String name;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Category parentCategory;
 
 	/**
