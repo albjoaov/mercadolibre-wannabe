@@ -1,5 +1,6 @@
 package com.mercadolibrewannabe.model;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,6 +20,7 @@ public class SuperEntity {
 
 	@Id
 	@GeneratedValue
+	@Type(type="uuid-char")
 	private UUID id;
 
 	@Column (nullable = false, updatable = false)
