@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class CategoryForm extends AbstractForm {
+public class CategoryForm {
 
 	@NotBlank
 	private String name;

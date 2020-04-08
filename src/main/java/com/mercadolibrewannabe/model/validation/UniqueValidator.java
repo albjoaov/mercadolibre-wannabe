@@ -1,12 +1,11 @@
 package com.mercadolibrewannabe.model.validation;
 
-import com.mercadolibrewannabe.model.form.AbstractForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.util.Optional;
 
-public abstract class UniqueValidator<F extends AbstractForm, E> implements Validator {
+public abstract class UniqueValidator<F, E> implements Validator {
 
 	protected abstract Optional<E> findEntityByField(F form);
 
