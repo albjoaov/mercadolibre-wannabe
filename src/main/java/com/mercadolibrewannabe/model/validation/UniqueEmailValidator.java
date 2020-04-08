@@ -3,13 +3,11 @@ package com.mercadolibrewannabe.model.validation;
 import com.mercadolibrewannabe.model.User;
 import com.mercadolibrewannabe.model.form.UserForm;
 import com.mercadolibrewannabe.repository.UserRepository;
-import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.Optional;
 
-public class UniqueEmailValidator implements Validator {
+public class UniqueEmailValidator extends UniqueValidator<UserForm, User> implements Validator {
 
 	private final UserRepository userRepository;
 
@@ -18,17 +16,27 @@ public class UniqueEmailValidator implements Validator {
 	}
 
 	@Override
-	public boolean supports (Class<?> clazz) {
-		return UserForm.class.isAssignableFrom(clazz);
+	protected Optional<User> findEntityByField (UserForm form) {
+		return this.userRepository.findByEmail(form.getEmail());
 	}
 
 	@Override
-	public void validate (Object target, Errors errors) {
-		UserForm userForm = (UserForm) target;
-		String email = userForm.getEmail();
+	protected Class<UserForm> getFormClass () {
+		return UserForm.class;
+	}
 
-		Optional<User> userOptional = this.userRepository.findByEmail(email);
+	@Override
+	protected String getErrorMessage () {
+		return "This email already has been used";
+	}
 
-		userOptional.ifPresent(e -> errors.rejectValue("email", "", "This email already has been used"));
+	@Override
+	protected String getInvalidFieldName () {
+		return "email";
+	}
+
+	@Override
+	protected String getErrorCode () {
+		return null;
 	}
 }
