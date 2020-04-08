@@ -1,6 +1,5 @@
 package com.mercadolibrewannabe.model;
 
-import com.mercadolibrewannabe.utils.BCrypter;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,19 +8,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @EntityListeners (AuditingEntityListener.class)
-public class User {
+public class Category {
 
 	@Id
 	@Type (type="uuid-char")
@@ -40,28 +38,25 @@ public class User {
 	private Integer version;
 
 	@NotBlank
-	@Email
-	@Column (unique = true)
-	private String email;
+	@Column(unique = true)
+	private String name;
 
-	@NotBlank
-	@Size(min = 6)
-	private String password;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Category parentCategory;
 
 	/**
 	 * @deprecated (Just for framework usages)
 	 */
 	@Deprecated
-	public User() { }
+	public Category() { }
 
-	/**
-	 * @param email string with a email format, e.g: your_email@example.com
-	 * @param hashAlgorithm hashing object
-	 */
-	public User (@Email @NotBlank String email,
-	             @NotNull BCrypter hashAlgorithm) {
-		this.email = email;
-		this.password = hashAlgorithm.getHashedPassword();
+	public Category (String name) {
+		this.name = name;
+	}
+
+	public Category (String name, Category parentCategory) {
+		this.name = name;
+		this.parentCategory = parentCategory;
 	}
 
 	public UUID getId () {
