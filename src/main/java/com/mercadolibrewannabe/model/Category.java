@@ -22,7 +22,6 @@ import java.util.UUID;
 public class Category {
 
 	@Id
-	@Type (type="uuid-char")
 	@GeneratedValue
 	@Type(type="uuid-char")
 	private UUID id;
@@ -58,37 +57,5 @@ public class Category {
 	public Category (String name, Category parentCategory) {
 		this.name = name;
 		this.parentCategory = parentCategory;
-	}
-
-	public UUID getId () {
-		return id;
-	}
-
-	public void setId (UUID id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getCreatedAt () {
-		return createdAt;
-	}
-
-	public void setCreatedAt (LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt () {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt (LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public Integer getVersion () {
-		return version;
-	}
-
-	public void setVersion (Integer version) {
-		this.version = version;
 	}
 }
