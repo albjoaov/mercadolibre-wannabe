@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -37,46 +38,25 @@ public class Role implements GrantedAuthority {
 	@Version
 	private Integer version;
 
+	// Equals and HashCode
+
+	@Override
+	public boolean equals (Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Role role = (Role) o;
+		return authority.equals(role.authority);
+	}
+
+	@Override
+	public int hashCode () {
+		return Objects.hash(authority);
+	}
+
 	// Getters and Setters
 
 	@Override
 	public String getAuthority () {
 		return authority;
-	}
-
-	public void setAuthority (String authority) {
-		this.authority = authority;
-	}
-
-	public UUID getId () {
-		return id;
-	}
-
-	public void setId (UUID id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getCreatedAt () {
-		return createdAt;
-	}
-
-	public void setCreatedAt (LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt () {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt (LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public Integer getVersion () {
-		return version;
-	}
-
-	public void setVersion (Integer version) {
-		this.version = version;
 	}
 }
