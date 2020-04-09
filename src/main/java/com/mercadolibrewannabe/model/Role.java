@@ -4,26 +4,27 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Version;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @EntityListeners (AuditingEntityListener.class)
-public class Category {
+public class Role implements GrantedAuthority {
+
+	private String authority;
 
 	@Id
 	@GeneratedValue
-	@Type(type="uuid-char")
+	@Type (type="uuid-char")
 	private UUID id;
 
 	@Column (nullable = false, updatable = false)
@@ -37,25 +38,25 @@ public class Category {
 	@Version
 	private Integer version;
 
-	@NotBlank
-	@Column(unique = true)
-	private String name;
+	// Equals and HashCode
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Category parentCategory;
-
-	/**
-	 * @deprecated (Just for framework usages)
-	 */
-	@Deprecated
-	public Category() { }
-
-	public Category (String name) {
-		this.name = name;
+	@Override
+	public boolean equals (Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Role role = (Role) o;
+		return authority.equals(role.authority);
 	}
 
-	public Category (String name, Category parentCategory) {
-		this.name = name;
-		this.parentCategory = parentCategory;
+	@Override
+	public int hashCode () {
+		return Objects.hash(authority);
+	}
+
+	// Getters and Setters
+
+	@Override
+	public String getAuthority () {
+		return authority;
 	}
 }

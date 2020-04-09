@@ -3,6 +3,7 @@ package com.mercadolibrewannabe.model.form;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mercadolibrewannabe.model.User;
 import com.mercadolibrewannabe.utils.BCrypter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -25,19 +26,16 @@ public class UserForm extends AbstractForm {
 		return new User(this.email, new BCrypter(this.password));
 	}
 
-	public String getEmail () {
-		return email;
+	public UsernamePasswordAuthenticationToken toAuthToken() {
+		return new UsernamePasswordAuthenticationToken(this.email, this.password);
 	}
 
-	public void setEmail (String email) {
-		this.email = email;
+	public String getEmail () {
+		return email;
 	}
 
 	public String getPassword () {
 		return password;
 	}
 
-	public void setPassword (String password) {
-		this.password = password;
-	}
 }
