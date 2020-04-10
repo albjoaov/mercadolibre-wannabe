@@ -51,29 +51,35 @@ public class Product {
 	@JoinColumn
 	@CollectionTable(name = "photo", joinColumns = @JoinColumn(name = "product_id"))
 	@Size(min = 1)
+	@NotNull
 	private List<Photo> photoList;
 
 	@NotBlank
+	@Column(nullable = false)
 	private String name;
 
-	@NotBlank
 	@DecimalMin(value = "0", inclusive = false)
+	@Column(nullable = false)
 	private BigDecimal value;
 
 	@Min(0)
+	@Column(nullable = false)
 	private Long amount;
 
 	@ElementCollection
 	@JoinColumn
 	@CollectionTable(name = "features", joinColumns = @JoinColumn(name = "product_id"))
 	@Size(min = 3)
+	@NotNull
+	@Column(nullable = false)
 	private Set<Features> featuresSet;
 
 	@NotBlank
 	@Size(max = 1000)
+	@Column(nullable = false)
 	private String description;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@NotNull
 	private Category category;
 
