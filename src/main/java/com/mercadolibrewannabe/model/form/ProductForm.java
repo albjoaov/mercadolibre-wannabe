@@ -12,38 +12,40 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 public class ProductForm {
 
-	@Size (min = 1)
+	@Size(min = 1)
+	@NotNull
 	private List<MultipartFile> photoList;
 
 	@NotBlank
 	private String name;
 
-	@NotBlank
-	@DecimalMin (value = "0", inclusive = false)
+	@DecimalMin(value = "0", inclusive = false)
 	private BigDecimal value;
 
-	@Min (0)
+	@Min(0)
 	private Long amount;
 
 	@Size(min = 3)
-	private Set<FeaturesForm> featuresSet;
+	private Set<FeaturesForm> featuresFormSet;
+
+//	@NotNull
+//	private FeaturesForm featuresForm;
 
 	@NotBlank
 	@Size(max = 1000)
 	private String description;
 
 	@NotNull
-	private UUID categoryId;
+	private String categoryId;
 
 	public Product toModel (User principal) {
 		return new Product();
 	}
 
-	// GETTERS
+	// SETTERS
 
 	public List<MultipartFile> getPhotoList () {
 		return photoList;
@@ -61,15 +63,43 @@ public class ProductForm {
 		return amount;
 	}
 
-	public Set<FeaturesForm> getFeaturesSet () {
-		return featuresSet;
-	}
-
 	public String getDescription () {
 		return description;
 	}
 
-	public UUID getCategoryId () {
+	public String getCategoryId () {
 		return categoryId;
+	}
+
+	public void setPhotoList (List<MultipartFile> photoList) {
+		this.photoList = photoList;
+	}
+
+	public void setName (String name) {
+		this.name = name;
+	}
+
+	public void setValue (BigDecimal value) {
+		this.value = value;
+	}
+
+	public void setAmount (Long amount) {
+		this.amount = amount;
+	}
+
+	public void setDescription (String description) {
+		this.description = description;
+	}
+
+	public void setCategoryId (String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Set<FeaturesForm> getFeaturesFormSet () {
+		return featuresFormSet;
+	}
+
+	public void setFeaturesFormSet (Set<FeaturesForm> featuresFormSet) {
+		this.featuresFormSet = featuresFormSet;
 	}
 }
