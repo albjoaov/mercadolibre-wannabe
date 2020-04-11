@@ -4,6 +4,7 @@ import com.mercadolibrewannabe.model.dto.ApiErrorReturn;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,20 @@ public class FormModelsExceptionHandler {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler (MethodArgumentNotValidException.class)
 	public List<ApiErrorReturn> handle(MethodArgumentNotValidException exception) {
+
+		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+
+		return fieldErrors.stream().map(fieldError -> {
+
+			String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+			return new ApiErrorReturn(fieldError.getField(), message);
+
+		}).collect(Collectors.toList());
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler (BindException.class)
+	public List<ApiErrorReturn> handle(BindException exception) {
 
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 
