@@ -3,7 +3,9 @@ package com.mercadolibrewannabe.controller;
 import com.mercadolibrewannabe.model.Product;
 import com.mercadolibrewannabe.model.User;
 import com.mercadolibrewannabe.model.form.ProductForm;
+import com.mercadolibrewannabe.repository.CategoryRepository;
 import com.mercadolibrewannabe.repository.ProductRepository;
+import com.mercadolibrewannabe.utils.Uploader;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +20,18 @@ import javax.validation.Valid;
 public class ProductController {
 
 	private final ProductRepository productRepository;
+	private final CategoryRepository categoryRepository;
 
-	public ProductController (ProductRepository productRepository) {
+	private final Uploader uploader;
+
+
+	public ProductController (ProductRepository productRepository,
+	                          CategoryRepository categoryRepository,
+	                          Uploader uploader) {
+
 		this.productRepository = productRepository;
+		this.categoryRepository = categoryRepository;
+		this.uploader = uploader;
 	}
 
 	@PostMapping
@@ -29,7 +40,7 @@ public class ProductController {
 
 		 User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		 Product product = productForm.toModel(principal);
+		 Product product = productForm.toModel(principal, uploader, categoryRepository::findById);
 		 productRepository.save(product);
 	}
 }
