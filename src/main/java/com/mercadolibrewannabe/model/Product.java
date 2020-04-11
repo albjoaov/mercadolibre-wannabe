@@ -1,8 +1,7 @@
 package com.mercadolibrewannabe.model;
 
+import io.jsonwebtoken.lang.Assert;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.Currency;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -48,7 +46,6 @@ public class Product {
 	private Integer version;
 
 	@ElementCollection
-	@JoinColumn
 	@CollectionTable(name = "photo", joinColumns = @JoinColumn(name = "product_id"))
 	@Size(min = 1)
 	@NotNull
@@ -63,16 +60,16 @@ public class Product {
 	private BigDecimal value;
 
 	@Min(0)
+	@NotNull
 	@Column(nullable = false)
 	private Long amount;
 
 	@ElementCollection
-	@JoinColumn
 	@CollectionTable(name = "features", joinColumns = @JoinColumn(name = "product_id"))
 	@Size(min = 3)
 	@NotNull
 	@Column(nullable = false)
-	private Set<Features> featuresSet;
+	private Set<Feature> featureSet;
 
 	@NotBlank
 	@Size(max = 1000)
@@ -83,7 +80,44 @@ public class Product {
 	@NotNull
 	private Category category;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@NotNull
 	private User user;
+
+	/**
+	 * @deprecated (Just for framework usages)
+	 */
+	@Deprecated
+	public Product () { }
+
+	public Product (List<Photo> photoList,
+	                String name,
+	                BigDecimal value,
+	                Long amount,
+	                Set<Feature> featureSet,
+	                String description,
+	                Category category,
+	                User user) {
+
+		Assert.notNull(photoList);
+		Assert.notEmpty(photoList);
+		Assert.hasText(name);
+		Assert.isTrue(value.doubleValue() > 0);
+		Assert.isTrue(amount >= 0);
+		Assert.isTrue(featureSet.size() >= 3);
+		Assert.hasText(description);
+		Assert.isTrue(description.length() <= 1000);
+		Assert.notNull(category);
+		Assert.notNull(user);
+
+		this.name = name;
+		this.value = value;
+		this.amount = amount;
+		this.description = description;
+		this.user = user;
+
+		this.category = category;
+		this.featureSet = featureSet;
+		this.photoList = photoList;
+	}
 }
