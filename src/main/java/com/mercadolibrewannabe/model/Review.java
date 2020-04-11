@@ -2,6 +2,7 @@ package com.mercadolibrewannabe.model;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -40,6 +41,10 @@ public class Review {
 	@Version
 	private Integer version;
 
+	@ManyToOne(optional = false)
+	@CreatedBy
+	private User createdBy;
+
 	@Min (1)
 	@Max (5)
 	@NotNull
@@ -58,6 +63,13 @@ public class Review {
 	@NotNull
 	@ManyToOne(optional = false)
 	private Product product;
+
+	/**
+	 * @deprecated usage only for frameworks
+	 */
+	@Deprecated
+	public Review () {
+	}
 
 	public Review (Long rating,
 	               String title,
