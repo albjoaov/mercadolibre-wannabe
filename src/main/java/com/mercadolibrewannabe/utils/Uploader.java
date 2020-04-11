@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface Uploader {
 
-	String upload (List<MultipartFile> multipartFile);
+	List<String> upload (List<MultipartFile> multipartFileList);
 }
