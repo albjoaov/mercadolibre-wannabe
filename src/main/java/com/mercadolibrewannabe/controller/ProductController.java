@@ -38,6 +38,7 @@ public class ProductController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void create(@Valid ProductForm productForm) {
 
+		// @AuthenticatedPrincipal can be used too
 		 User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		 Product product = productForm.toModel(principal, uploader, categoryRepository::findById);

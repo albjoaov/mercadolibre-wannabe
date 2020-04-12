@@ -24,24 +24,18 @@ public class FormModelsExceptionHandler {
 	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler (MethodArgumentNotValidException.class)
-	public List<ApiErrorReturn> handle(MethodArgumentNotValidException exception) {
+	@ExceptionHandler ({MethodArgumentNotValidException.class, BindException.class})
+	public List<ApiErrorReturn> handle(Exception exception) {
 
-		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+		if (exception instanceof MethodArgumentNotValidException) {
+			return getApiErrorResponse(((MethodArgumentNotValidException) exception).getBindingResult().getFieldErrors());
 
-		return fieldErrors.stream().map(fieldError -> {
-
-			String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
-			return new ApiErrorReturn(fieldError.getField(), message);
-
-		}).collect(Collectors.toList());
+		} else {
+			return getApiErrorResponse(((BindException) exception).getBindingResult().getFieldErrors());
+		}
 	}
 
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler (BindException.class)
-	public List<ApiErrorReturn> handle(BindException exception) {
-
-		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+	private List<ApiErrorReturn> getApiErrorResponse (List<FieldError> fieldErrors) {
 
 		return fieldErrors.stream().map(fieldError -> {
 
