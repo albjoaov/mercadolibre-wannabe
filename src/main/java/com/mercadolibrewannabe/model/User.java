@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -53,7 +54,7 @@ public class User implements UserDetails {
 	@Size(min = 6)
 	private String password;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles;
 
 	/**

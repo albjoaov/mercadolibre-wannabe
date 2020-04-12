@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class CategoryForm extends AbstractForm {
+public class CategoryForm {
 
 	@NotBlank
 	private String name;
@@ -18,6 +18,8 @@ public class CategoryForm extends AbstractForm {
 
 		if (parentCategoryId != null) {
 			UUID uuid = UUID.fromString(parentCategoryId);
+
+			// TODO: Handle wrong id passed by Client
 			Category foundCategory = categoryLoader.apply(uuid).get();
 			return new Category(name, foundCategory);
 
