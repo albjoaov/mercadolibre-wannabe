@@ -54,4 +54,14 @@ public class Question {
 		this.title = title;
 		this.product = product;
 	}
+
+	@Override
+	public String toString () {
+		return "Question{" +
+				"createdAt=" + createdAt +
+				", author=" + author +
+				", title='" + title + '\'' +
+				", product=" + product +
+				'}';
+	}
 }
