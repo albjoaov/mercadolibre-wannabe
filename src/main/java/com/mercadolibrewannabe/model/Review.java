@@ -43,7 +43,7 @@ public class Review {
 
 	@ManyToOne(optional = false)
 	@CreatedBy
-	private User createdBy;
+	private User user;
 
 	@Min (1)
 	@Max (5)
@@ -68,8 +68,7 @@ public class Review {
 	 * @deprecated usage only for frameworks
 	 */
 	@Deprecated
-	public Review () {
-	}
+	public Review () { }
 
 	public Review (Long rating,
 	               String title,
