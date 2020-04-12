@@ -35,6 +35,12 @@ public class FormModelsExceptionHandler {
 		}
 	}
 
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler (IllegalArgumentException.class)
+	public ApiErrorReturn handleIllegalArgument(IllegalArgumentException exception) {
+		return new ApiErrorReturn(exception.getMessage());
+	}
+
 	private List<ApiErrorReturn> getApiErrorResponse (List<FieldError> fieldErrors) {
 
 		return fieldErrors.stream().map(fieldError -> {
