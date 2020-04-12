@@ -5,7 +5,6 @@ import com.mercadolibrewannabe.repository.UserRepository;
 import com.mercadolibrewannabe.service.JwtTokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
