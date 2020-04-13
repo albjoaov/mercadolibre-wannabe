@@ -2,6 +2,7 @@ package com.mercadolibrewannabe.model.form;
 
 import com.mercadolibrewannabe.model.Product;
 import com.mercadolibrewannabe.model.Review;
+import com.mercadolibrewannabe.utils.enums.RatingEnum;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
@@ -16,7 +17,7 @@ public class ReviewForm {
 	@NotNull
 	@Max(5)
 	@Min(1)
-	private Long rating;
+	private Integer rating;
 
 	@NotNull
 	private String title;
@@ -28,7 +29,7 @@ public class ReviewForm {
 	@NotNull
 	private String productId;
 
-	public Long getRating () {
+	public Integer getRating () {
 		return rating;
 	}
 
@@ -49,6 +50,8 @@ public class ReviewForm {
 		// TODO: Handle wrong id passed by Client
 		Product product = productLoader.apply(UUID.fromString(productId)).get();
 
-		return new Review(this.rating, this.title, this.description, product);
+		RatingEnum ratingEnum = RatingEnum.byValue(this.rating);
+
+		return new Review(ratingEnum, this.title, this.description, product);
 	}
 }

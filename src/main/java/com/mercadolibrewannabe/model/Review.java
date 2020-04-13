@@ -1,5 +1,6 @@
 package com.mercadolibrewannabe.model;
 
+import com.mercadolibrewannabe.utils.enums.RatingEnum;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedBy;
@@ -45,11 +46,11 @@ public class Review {
 	@CreatedBy
 	private User user;
 
-	@Min (1)
-	@Max (5)
+	@Min(1)
+	@Max(5)
 	@NotNull
 	@Column(nullable = false)
-	private Long rating;
+	private Integer rating;
 
 	@NotNull
 	@Column(nullable = false)
@@ -70,19 +71,18 @@ public class Review {
 	@Deprecated
 	public Review () { }
 
-	public Review (Long rating,
+	public Review (RatingEnum rating,
 	               String title,
 	               String description,
 	               Product product) {
 
 		Assert.notNull(rating);
-		Assert.isTrue(rating >= 1 && rating <=5, "the rating must be between 1 and 5");
 		Assert.hasText(title);
 		Assert.hasText(description);
 		Assert.isTrue(description.length() <= 500, "The description max length is 500");
 		Assert.notNull(product);
 
-		this.rating = rating;
+		this.rating = rating.getValue();
 		this.title = title;
 		this.description = description;
 		this.product = product;
