@@ -1,7 +1,6 @@
 package com.mercadolibrewannabe.model;
 
 import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
 
@@ -28,7 +27,6 @@ public class Question {
 	private final LocalDateTime createdAt = LocalDateTime.now();
 
 	@ManyToOne (optional = false)
-	@CreatedBy
 	private User author;
 
 	@NotNull
@@ -46,13 +44,16 @@ public class Question {
 	public Question () { }
 
 	public Question (@NotNull String title,
-	                 @NotNull Product product) {
+	                 @NotNull Product product,
+	                 @NotNull User author) {
 
 		Assert.notNull(title);
 		Assert.notNull(product);
+		Assert.notNull(author);
 
 		this.title = title;
 		this.product = product;
+		this.author = author;
 	}
 
 	@Override
