@@ -1,5 +1,6 @@
 package com.mercadolibrewannabe.model;
 
+import com.mercadolibrewannabe.event.QuestionCreatedEvent;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
@@ -54,6 +55,10 @@ public class Question {
 		this.title = title;
 		this.product = product;
 		this.author = author;
+	}
+
+	public QuestionCreatedEvent toEvent() {
+		return new QuestionCreatedEvent(this);
 	}
 
 	@Override
