@@ -17,4 +17,16 @@ public class QuestionDto {
 		this.authorEmail = question.getAuthor().getUsername();
 		this.title = question.getTitle();
 	}
+
+	public LocalDateTime getCreatedAt () {
+		return createdAt;
+	}
+
+	public String getAuthorEmail () {
+		return authorEmail;
+	}
+
+	public String getTitle () {
+		return title;
+	}
 }

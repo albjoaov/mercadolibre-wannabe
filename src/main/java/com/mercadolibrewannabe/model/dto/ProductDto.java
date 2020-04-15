@@ -1,10 +1,13 @@
 package com.mercadolibrewannabe.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.math.BigDecimal;
 import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
+@JsonAutoDetect (fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ProductDto {
 
 	private final List<String> photoUrlList;

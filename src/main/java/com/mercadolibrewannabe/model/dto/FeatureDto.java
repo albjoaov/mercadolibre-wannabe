@@ -28,4 +28,12 @@ public class FeatureDto {
 	public int hashCode () {
 		return Objects.hash(name, detail);
 	}
+
+	public String getName () {
+		return name;
+	}
+
+	public String getDetail () {
+		return detail;
+	}
 }

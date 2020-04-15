@@ -15,4 +15,16 @@ public class ReviewDto {
 		this.title = review.getTitle();
 		this.description = review.getDescription();
 	}
+
+	public Integer getRating () {
+		return rating;
+	}
+
+	public String getTitle () {
+		return title;
+	}
+
+	public String getDescription () {
+		return description;
+	}
 }

@@ -13,4 +13,16 @@ public class ReviewDtoWrapper {
 		this.ratingAverage = ratingAverage;
 		this.reviewDtoList = reviewDtoList;
 	}
+
+	public int getReviewListSize () {
+		return reviewListSize;
+	}
+
+	public double getRatingAverage () {
+		return ratingAverage;
+	}
+
+	public List<ReviewDto> getReviewDtoList () {
+		return reviewDtoList;
+	}
 }

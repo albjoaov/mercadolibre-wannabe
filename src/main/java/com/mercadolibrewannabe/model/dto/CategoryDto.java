@@ -6,11 +6,11 @@ public class CategoryDto {
 
 	private final String name;
 
-	public CategoryDto (String name) {
-		this.name = name;
-	}
-
 	public CategoryDto (Category category) {
 		this.name = category.getName();
+	}
+
+	public String getName () {
+		return name;
 	}
 }
