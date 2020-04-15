@@ -1,13 +1,13 @@
 package com.mercadolibrewannabe.utils.enums;
 
-public enum RatingEnum {
+public enum Rating {
 	ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5);
 
 	private final Integer value;
 
-	private static final RatingEnum[] valuesArray = values();
+	private static final Rating[] valuesArray = values();
 
-	RatingEnum (Integer i) {
+	Rating (Integer i) {
 		this.value = i;
 	}
 
@@ -15,7 +15,7 @@ public enum RatingEnum {
 		return value;
 	}
 
-	public static RatingEnum byValue(Integer value) {
+	public static Rating byValue(Integer value) {
 		return valuesArray[value - 1];
 	}
 }

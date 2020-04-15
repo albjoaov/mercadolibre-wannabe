@@ -1,6 +1,6 @@
 package com.mercadolibrewannabe.model;
 
-import com.mercadolibrewannabe.utils.enums.RatingEnum;
+import com.mercadolibrewannabe.utils.enums.Rating;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedBy;
@@ -71,7 +71,7 @@ public class Review {
 	@Deprecated
 	public Review () { }
 
-	public Review (RatingEnum rating,
+	public Review (Rating rating,
 	               String title,
 	               String description,
 	               Product product) {
