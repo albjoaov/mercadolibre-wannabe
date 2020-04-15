@@ -40,6 +40,6 @@ public class QuestionController {
 		Question question = questionForm.toModel(product, author);
 
 		questionRepository.save(question);
-		publisher.publishEvent(new QuestionCreatedEvent(question));
+		publisher.publishEvent(question.toEvent());
 	}
 }
