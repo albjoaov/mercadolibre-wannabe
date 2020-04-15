@@ -1,6 +1,5 @@
 package com.mercadolibrewannabe.controller;
 
-import com.mercadolibrewannabe.event.QuestionCreatedEvent;
 import com.mercadolibrewannabe.model.Product;
 import com.mercadolibrewannabe.model.Question;
 import com.mercadolibrewannabe.model.User;
