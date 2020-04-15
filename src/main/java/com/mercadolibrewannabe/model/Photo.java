@@ -3,6 +3,8 @@ package com.mercadolibrewannabe.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Photo {
@@ -20,5 +22,13 @@ public class Photo {
 
 	public Photo (String url) {
 		this.url = url;
+	}
+
+	public static List<String> mapPhotoListToPhotoUrlList (List<Photo> photoList) {
+		return photoList.stream().map(Photo::getUrl).collect(Collectors.toList());
+	}
+
+	public String getUrl () {
+		return url;
 	}
 }

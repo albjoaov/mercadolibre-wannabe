@@ -1,7 +1,8 @@
 package com.mercadolibrewannabe.model;
 
-import com.mercadolibrewannabe.infra.EmailBodyProvider;
 import com.mercadolibrewannabe.event.QuestionCreatedEvent;
+import com.mercadolibrewannabe.infra.EmailBodyProvider;
+import com.mercadolibrewannabe.model.dto.QuestionDto;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
@@ -14,7 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @EntityListeners (AuditingEntityListener.class)
@@ -79,5 +82,21 @@ public class Question {
 				createdAt,
 				this.product.getUser(),
 				this.author);
+	}
+
+	public static List<QuestionDto> mapQuestionListToQuestionListDto (List<Question> questionList) {
+		return questionList.stream().map(QuestionDto::new).collect(Collectors.toList());
+	}
+
+	public LocalDateTime getCreatedAt () {
+		return createdAt;
+	}
+
+	public User getAuthor () {
+		return author;
+	}
+
+	public String getTitle () {
+		return title;
 	}
 }

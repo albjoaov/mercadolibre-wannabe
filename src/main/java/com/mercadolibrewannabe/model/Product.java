@@ -1,5 +1,11 @@
 package com.mercadolibrewannabe.model;
 
+import com.mercadolibrewannabe.infra.Markdown;
+import com.mercadolibrewannabe.model.dto.CategoryDto;
+import com.mercadolibrewannabe.model.dto.FeatureDto;
+import com.mercadolibrewannabe.model.dto.ProductDto;
+import com.mercadolibrewannabe.model.dto.QuestionDto;
+import com.mercadolibrewannabe.model.dto.ReviewDtoWrapper;
 import io.jsonwebtoken.lang.Assert;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,9 +28,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Entity
 @EntityListeners (AuditingEntityListener.class)
@@ -119,6 +127,33 @@ public class Product {
 		this.category = category;
 		this.featureSet = featureSet;
 		this.photoList = photoList;
+	}
+
+	public ProductDto toDto (Function<Product, List<Review>> reviewsLoader,
+	                         Function<Product, List<Question>> questionLoader) {
+
+		List<String> photoUrlList = Photo.mapPhotoListToPhotoUrlList(this.photoList);
+
+		Deque<CategoryDto> categoryDtoArrayDeque = Category.getCategoryDtoStack(this.category);
+
+		List<Review> reviewList = reviewsLoader.apply(this);
+		ReviewDtoWrapper reviewDtoWrapper = Review.getReviewDtoWrapper(reviewList);
+
+		Set<FeatureDto> featureDtoSet = Feature.mapFeatureSetToFeatureDtoSet(this.featureSet);
+
+		List<Question> questionList = questionLoader.apply(this);
+		List<QuestionDto> questionDtoList = Question.mapQuestionListToQuestionListDto(questionList);
+
+		String markdownDescription = Markdown.format(this.description);
+
+		return new ProductDto(photoUrlList,
+				categoryDtoArrayDeque,
+				this.name,
+				this.value,
+				featureDtoSet,
+				markdownDescription,
+				questionDtoList,
+				reviewDtoWrapper);
 	}
 
 	public User getUser () {

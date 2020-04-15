@@ -1,5 +1,6 @@
 package com.mercadolibrewannabe.model;
 
+import com.mercadolibrewannabe.model.dto.CategoryDto;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @EntityListeners (AuditingEntityListener.class)
@@ -57,5 +61,30 @@ public class Category {
 	public Category (String name, Category parentCategory) {
 		this.name = name;
 		this.parentCategory = parentCategory;
+	}
+
+	public static Deque<CategoryDto> getCategoryDtoStack(Category category) {
+		Deque<Category> categoriesFamilyStack = getAllParentCategories(category);
+		return mapCategoryStackToCategoryDtoStack(categoriesFamilyStack);
+	}
+
+	private static Deque<Category> getAllParentCategories (Category category) {
+
+		Deque<Category> categoryDtoStack = new ArrayDeque<>();
+
+		while (category != null) {
+			categoryDtoStack.push(category);
+			category = category.parentCategory;
+		}
+
+		return categoryDtoStack;
+	}
+
+	private static Deque<CategoryDto> mapCategoryStackToCategoryDtoStack (Deque<Category> categoryStack) {
+		return categoryStack.stream().map(CategoryDto::new).collect(Collectors.toCollection(ArrayDeque::new));
+	}
+
+	public String getName () {
+		return name;
 	}
 }

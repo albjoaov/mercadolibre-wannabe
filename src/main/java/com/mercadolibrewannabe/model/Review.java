@@ -1,5 +1,7 @@
 package com.mercadolibrewannabe.model;
 
+import com.mercadolibrewannabe.model.dto.ReviewDto;
+import com.mercadolibrewannabe.model.dto.ReviewDtoWrapper;
 import com.mercadolibrewannabe.utils.enums.Rating;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
@@ -20,7 +22,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @EntityListeners (AuditingEntityListener.class)
@@ -86,5 +90,29 @@ public class Review {
 		this.title = title;
 		this.description = description;
 		this.product = product;
+	}
+
+	public static ReviewDtoWrapper getReviewDtoWrapper (List<Review> reviewList) {
+		int reviewListSize = reviewList.size();
+		double ratingAverage = reviewList.stream().mapToInt(Review::getRating).average().orElse(0);
+		List<ReviewDto> reviewDtos = mapReviewListToReviewListDto(reviewList);
+		return new ReviewDtoWrapper(reviewListSize, ratingAverage, reviewDtos);
+	}
+
+	private static List<ReviewDto> mapReviewListToReviewListDto (List<Review> reviewList) {
+		return reviewList.stream().map(ReviewDto::new).collect(Collectors.toList());
+	}
+
+
+	public Integer getRating () {
+		return rating;
+	}
+
+	public String getTitle () {
+		return title;
+	}
+
+	public String getDescription () {
+		return description;
 	}
 }
