@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Playground classes
+/src/main/java/com/mercadolibrewannabe/Main.java
