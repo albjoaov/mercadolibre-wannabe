@@ -17,7 +17,7 @@ public class FindById {
 
 	public static <T> T using (JpaRepository<T, UUID> repository, UUID id) {
 
-		Assert.notNull(id);
+		Assert.notNull(id, invalidIdMessage);
 
 		Optional<T> entityOptional = repository.findById(id);
 
