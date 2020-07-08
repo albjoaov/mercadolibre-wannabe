@@ -137,7 +137,7 @@ public class Product {
 		Deque<CategoryDto> categoryDtoArrayDeque = Category.getCategoryDtoStack(this.category);
 
 		List<Review> reviewList = reviewsLoader.apply(this);
-		ReviewDtoWrapper reviewDtoWrapper = Review.getReviewDtoWrapper(reviewList);
+		ReviewDtoWrapper reviewDtoWrapper = new ReviewDtoWrapper(reviewList);
 
 		Set<FeatureDto> featureDtoSet = Feature.mapFeatureSetToFeatureDtoSet(this.featureSet);
 

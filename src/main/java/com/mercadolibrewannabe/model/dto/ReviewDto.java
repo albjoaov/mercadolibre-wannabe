@@ -2,6 +2,9 @@ package com.mercadolibrewannabe.model.dto;
 
 import com.mercadolibrewannabe.model.Review;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ReviewDto {
 
 	private final Integer rating;
@@ -14,6 +17,10 @@ public class ReviewDto {
 		this.rating = review.getRating();
 		this.title = review.getTitle();
 		this.description = review.getDescription();
+	}
+
+	public static List<ReviewDto> mapToReviewDtoList (List<Review> reviewList) {
+		return reviewList.stream().map(ReviewDto::new).collect(Collectors.toList());
 	}
 
 	public Integer getRating () {

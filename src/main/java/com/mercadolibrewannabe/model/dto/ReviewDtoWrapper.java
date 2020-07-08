@@ -1,6 +1,10 @@
 package com.mercadolibrewannabe.model.dto;
 
+import com.mercadolibrewannabe.model.Review;
+
 import java.util.List;
+
+import static com.mercadolibrewannabe.model.dto.ReviewDto.mapToReviewDtoList;
 
 public class ReviewDtoWrapper {
 
@@ -8,10 +12,10 @@ public class ReviewDtoWrapper {
 	private final double ratingAverage;
 	private final List<ReviewDto> reviewDtoList;
 
-	public ReviewDtoWrapper (int reviewListSize, double ratingAverage, List<ReviewDto> reviewDtoList) {
-		this.reviewListSize = reviewListSize;
-		this.ratingAverage = ratingAverage;
-		this.reviewDtoList = reviewDtoList;
+	public ReviewDtoWrapper (List<Review> reviewList) {
+		this.reviewListSize = reviewList.size();
+		this.ratingAverage = reviewList.stream().mapToInt(Review::getRating).average().orElse(0);
+		this.reviewDtoList = mapToReviewDtoList(reviewList);
 	}
 
 	public int getReviewListSize () {

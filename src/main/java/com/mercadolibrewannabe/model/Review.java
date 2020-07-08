@@ -92,18 +92,6 @@ public class Review {
 		this.product = product;
 	}
 
-	public static ReviewDtoWrapper getReviewDtoWrapper (List<Review> reviewList) {
-		int reviewListSize = reviewList.size();
-		double ratingAverage = reviewList.stream().mapToInt(Review::getRating).average().orElse(0);
-		List<ReviewDto> reviewDtos = mapReviewListToReviewListDto(reviewList);
-		return new ReviewDtoWrapper(reviewListSize, ratingAverage, reviewDtos);
-	}
-
-	private static List<ReviewDto> mapReviewListToReviewListDto (List<Review> reviewList) {
-		return reviewList.stream().map(ReviewDto::new).collect(Collectors.toList());
-	}
-
-
 	public Integer getRating () {
 		return rating;
 	}
