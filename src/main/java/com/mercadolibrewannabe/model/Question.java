@@ -1,5 +1,6 @@
 package com.mercadolibrewannabe.model;
 
+import com.mercadolibrewannabe.infra.EmailBodyProvider;
 import com.mercadolibrewannabe.event.QuestionCreatedEvent;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -69,5 +70,14 @@ public class Question {
 				", title='" + title + '\'' +
 				", product=" + product +
 				'}';
+	}
+
+	public Email buildEmail(EmailBodyProvider emailBodyProvider) {
+
+		return new Email(this.title,
+				emailBodyProvider.get(),
+				createdAt,
+				this.product.getUser(),
+				this.author);
 	}
 }

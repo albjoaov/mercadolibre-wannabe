@@ -120,4 +120,8 @@ public class Product {
 		this.featureSet = featureSet;
 		this.photoList = photoList;
 	}
+
+	public User getUser () {
+		return user;
+	}
 }
